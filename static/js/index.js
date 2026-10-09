@@ -31,9 +31,12 @@ $(document).ready(function() {
 
     var options = {
 			slidesToScroll: 1,
-			slidesToShow: 3,
+			slidesToShow: 1,
 			loop: true,
-			infinite: true,
+			infinite: false,
+			pagination: false,
+			breakpoints: [],
+			initialSlide: 5,
 			autoplay: false,
 			autoplaySpeed: 3000,
     }
@@ -45,7 +48,8 @@ $(document).ready(function() {
     for(var i = 0; i < carousels.length; i++) {
     	// Add listener to  event
     	carousels[i].on('before:show', state => {
-    		console.log(state);
+    		var index = ((state.next % state.length) + state.length) % state.length;
+    		$('#slides-counter').text((index + 1) + ' / ' + state.length);
     	});
     }
 
@@ -65,13 +69,14 @@ $(document).ready(function() {
         player.currentTime = player.duration / 100 * this.value;
       })
     }, false);*/
-    preloadInterpolationImages();
+    // Interpolation section is commented out in index.html for now.
+    /*preloadInterpolationImages();
 
     $('#interpolation-slider').on('input', function(event) {
       setInterpolationImage(this.value);
     });
     setInterpolationImage(0);
-    $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);
+    $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);*/
 
     bulmaSlider.attach();
 
